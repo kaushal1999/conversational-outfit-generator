@@ -14,6 +14,7 @@ import Paragraph from "./pages/Paragraph";
 import ChatBot from "./pages/ChatBot";
 import JsConverter from "./pages/JsConverter";
 import ScifiImage from "./pages/ScifiImage";
+import Preferences from "./pages/preferences";
 
 function App() {
   const theme = useMemo(() => createTheme(themeSettings()), []);
@@ -27,7 +28,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          {/* <Route path="/login" element={<Login />} /> */}
+          <Route path="/preferences" element={<Preferences />} />
           <Route path="/summary" element={<Summary />} />
           <Route path="/paragraph" element={<Paragraph />} />
           <Route path="/chatbot" element={<ChatBot />} />
