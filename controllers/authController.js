@@ -23,7 +23,7 @@ exports.registerContoller = async (req, res, next) => {
     const user = await userModel.create({ username, email, password });
     this.sendToken(user, 201, res);
   } catch (error) {
-    console.log(error);
+    console.log("kaushal",error);
     next(error);
   }
 };

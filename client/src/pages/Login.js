@@ -30,7 +30,7 @@ const Login = () => {
       await axios.post("/api/v1/auth/login", { email, password });
       toast.success("Login Successfully");
       localStorage.setItem("authToken", true);
-      navigate("/");
+      navigate("/chatbot");
     } catch (err) {
       console.log(error);
       if (err.response.data.error) {
