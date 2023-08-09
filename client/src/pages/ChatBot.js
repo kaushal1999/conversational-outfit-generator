@@ -57,36 +57,7 @@ const ChatBot = () => {
           {error}
         </Alert>
       </Collapse>
-      <form onSubmit={handleSubmit}>
-        <Typography variant="h3">Ask with Chatbot</Typography>
-
-        <TextField
-          placeholder="add your text"
-          type="text"
-          multiline={true}
-          required
-          margin="normal"
-          fullWidth
-          value={text}
-          onChange={(e) => {
-            settext(e.target.value);
-          }}
-        />
-
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          size="large"
-          sx={{ color: "white", mt: 2 }}
-        >
-          Chat
-        </Button>
-        <Typography mt={2}>
-          not this tool ? <Link to="/">GO BACK</Link>
-        </Typography>
-      </form>
-
+      
       {response ? (
         <Card
           sx={{
@@ -126,6 +97,38 @@ const ChatBot = () => {
           </Typography>
         </Card>
       )}
+     
+     <form onSubmit={handleSubmit}>
+        <Typography variant="h3">Ask with Chatbot</Typography>
+
+        <TextField
+          placeholder="add your text"
+          type="text"
+          multiline={true}
+          required
+          margin="normal"
+          fullWidth
+          value={text}
+          onChange={(e) => {
+            settext(e.target.value);
+          }}
+        />
+
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          size="large"
+          sx={{ color: "white", mt: 2 }}
+        >
+          Chat
+        </Button>
+        {/* <Typography mt={2}>
+          not this tool ? <Link to="/">GO BACK</Link>
+        </Typography> */}
+      </form>
+
+
     </Box>
   );
 };

@@ -30,7 +30,7 @@ const Register = () => {
     try {
       await axios.post("/api/v1/auth/register", { username, email, password });
       toast.success("User Register Successfully");
-      navigate("/");
+      navigate("/preferences");
     } catch (err) {
       console.log(error);
       if (err.response.data.error) {
