@@ -7,15 +7,14 @@ function Preferences() {
   const [formData, setFormData] = useState({
     age: "",
     gender: "",
-    city:"",
-    state:"",
-    areaType:"",
-    email: "",
-    phone: "",
+    city: "",
+    state: "",
+    areaType: "",
+    lifeStyle: "",
     favoriteColors: [],
     favoriteStyles: [],
-    favoriteBrands: "",
-    occasions: [],
+    accessories: [],
+    patterns: [],
     bodyType: "",
     culturalInfluences: "",
     budgetRange: "",
@@ -34,39 +33,53 @@ function Preferences() {
     }));
   };
 
-  const handleColorChange = (e) => {
+  const handleCheckBoxChange = (e) => {
     const { name, value } = e.target;
     let filtered = [];
-    if (formData.favoriteColors.includes(value)) {
-      filtered = formData.favoriteColors.filter((color) => color != value);
+    if (formData[name].includes(value)) {
+      filtered = formData[name].filter((e) => e != value);
     } else {
-      filtered = formData.favoriteColors;
+      filtered = formData[name];
       filtered.push(value);
     }
     setFormData((prevData) => ({
       ...prevData,
-      favoriteColors: filtered,
+      [name]: filtered,
     }));
   };
 
+  // const handleStyleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   let filtered = [];
+  //   if (formData.favoriteStyles.includes(value)) {
+  //     filtered = formData.favoriteStyles.filter((style) => style != value);
+  //   } else {
+  //     filtered = formData.favoriteStyles;
+  //     filtered.push(value);
+  //   }
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     favoriteStyles: filtered,
+  //   }));
+  // };
 
-  const handleStyleChange = (e) => {
-    const { name, value } = e.target;
-    let filtered = [];
-    if (formData.favoriteStyles.includes(value)) {
-      filtered = formData.favoriteStyles.filter((style) => style != value);
-    } else {
-      filtered = formData.favoriteStyles;
-      filtered.push(value);
-    }
-    setFormData((prevData) => ({
-      ...prevData,
-      favoriteStyles: filtered,
-    }));
-  };
-
-
-
+  const availablePatterns = [
+    "Stripes",
+    "Checks",
+    "Dots/Polka Dots",
+    "Florals",
+    "Geometric",
+    "Animal Prints",
+    "Abstract",
+    "Paisley",
+    "Tie-Dye",
+    "Ikat",
+    "Herringbone",
+    "Camouflage",
+    "Toile",
+    "Abstract Art",
+    "Patchwork",
+  ];
 
   const availableColors = [
     "Blue",
@@ -88,12 +101,13 @@ function Preferences() {
     "Retro",
     "Formal",
     "Sporty",
-     "Mixed Style"
-
+    "Mixed Style",
   ];
 
+  const availableAccesories = ["belt", "wristwatch", "jwellery"];
+
   return (
-    <Form>
+    <Form className="form">
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Age</Form.Label>
         <Form.Control
@@ -127,7 +141,6 @@ function Preferences() {
         />
       </Form.Group>
 
-
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Your Area Type</Form.Label>
         <Form.Select
@@ -136,12 +149,12 @@ function Preferences() {
           onChange={handleInputChange}
         >
           <option>select</option>
-          <option value="1">Rural</option>
-          <option value="2">Urban</option>
+          <option value="rural">Rural</option>
+          <option value="urban">Urban</option>
           {/* <option value="3">Three</option> */}
         </Form.Select>
       </Form.Group>
-     
+
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Body Type</Form.Label>
         <Form.Select
@@ -150,15 +163,13 @@ function Preferences() {
           onChange={handleInputChange}
         >
           <option>select</option>
-          <option value="1">Slim</option>
-          <option value="2">Fit</option>
+          <option value="slim">Slim</option>
+          <option value="fit">Fit</option>
           <option value="3"></option>
           {/* <option value="3">Three</option> */}
         </Form.Select>
       </Form.Group>
-     
-      
-     
+
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Gender</Form.Label>
         <Form.Select
@@ -167,50 +178,95 @@ function Preferences() {
           onChange={handleInputChange}
         >
           <option>select</option>
-          <option value="1">Male</option>
-          <option value="2">Female</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
           {/* <option value="3">Three</option> */}
         </Form.Select>
       </Form.Group>
 
-
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Favorite Colors</Form.Label>
-      {availableColors.map((color) => (
-        <div key={color} className="mb-3">
-          <Form.Check
-            inline
-            label={color}
-            value={color}
-            name="group1"
-            id={color}
-            checked={formData.favoriteColors.includes(color)}
-            onChange={handleColorChange}
-          />
+        <div className="mb-3">
+          {availableColors.map((color) => (
+            <Form.Check
+              inline
+              label={color}
+              value={color}
+              name="favoriteColors"
+              id={color}
+              checked={formData.favoriteColors.includes(color)}
+              onChange={handleCheckBoxChange}
+            />
+          ))}
         </div>
-      ))}
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Favorite Styles</Form.Label>
-      {availableStyles.map((style) => (
-        <div key={style} className="mb-3">
-          <Form.Check
-            inline
-            label={style}
-            value={style}
-            name="group1"
-            id={style}
-            checked={formData.favoriteStyles.includes(style)}
-            onChange={handleStyleChange}
-          />
+        <div className="mb-3">
+          {availableStyles.map((style) => (
+            <Form.Check
+              inline
+              label={style}
+              value={style}
+              name="favoriteStyles"
+              id={style}
+              checked={formData.favoriteStyles.includes(style)}
+              onChange={handleCheckBoxChange}
+            />
+          ))}
         </div>
-      ))}
       </Form.Group>
 
+      <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Label>Which accessories do you generally use?</Form.Label>
+        <div className="mb-3">
+          {availableAccesories.map((style) => (
+            <Form.Check
+              inline
+              label={style}
+              value={style}
+              name="accessories"
+              id={style}
+              checked={formData.accessories.includes(style)}
+              onChange={handleCheckBoxChange}
+            />
+          ))}
+        </div>
+      </Form.Group>
 
+      {/* <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Label>Your Lifestyle</Form.Label>
+        <Form.Select
+          aria-label="Default select example"
+          name="lifeStyle"
+          onChange={handleInputChange}
+        >
+          <option>select</option>
+          <option value="Corporate Professional">Corporate Professional
+</option>
+          <option value="Creative Artist"Creative Artist
+></option>
+          <option value="">Three</option>
+        </Form.Select>
+      </Form.Group> */}
 
-
+      <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Label>Favorite Patterns</Form.Label>
+        <div className="mb-3">
+          {availablePatterns.map((color) => (
+            <Form.Check
+              inline
+              label={color}
+              value={color}
+              name="patterns"
+              id={color}
+              checked={formData.patterns.includes(color)}
+              onChange={handleCheckBoxChange}
+            />
+          ))}
+        </div>
+      </Form.Group>
 
       <Button variant="primary" type="submit">
         Submit
