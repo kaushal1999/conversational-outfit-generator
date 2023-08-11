@@ -2,8 +2,15 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+
+
 
 function Preferences() {
+
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     age: "",
     gender: "",
@@ -48,21 +55,21 @@ function Preferences() {
     }));
   };
 
-  const handleSubmit = async ()=> {
+  const handleSubmit = async (e)=> {
     e.preventDefault();
     try {
-      await axios.post("/api/v1/auth/preferences",formData);
+      await axios.post("/api/v1/preferences",formData);
       navigate("/chatbot");
     } catch (err) {
       console.log(err);
-      if (err.response.data.error) {
-        setError(err.response.data.error);
-      } else if (err.message) {
-        setError(err.message);
-      }
-      setTimeout(() => {
-        setError("");
-      }, 5000);
+      // if (err.response.data.error) {
+      //   setError(err.response.data.error);
+      // } else if (err.message) {
+      //   setError(err.message);
+      // }
+      // setTimeout(() => {
+      //   setError("");
+      // }, 5000);
     }
   }
 
