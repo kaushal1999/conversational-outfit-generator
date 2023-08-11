@@ -43,7 +43,7 @@ userSchema.methods.matchPassword = async function (password) {
 
 //SIGN TOKEN
 userSchema.methods.getSignedToken = function (res) {
-  const acccesToken = JWT.sign(
+  const accessToken = JWT.sign(
     { id: this._id },
     process.env.JWT_ACCESS_SECRET,
     { expiresIn: process.env.JWT_ACCESS_EXPIREIN }
@@ -57,6 +57,12 @@ userSchema.methods.getSignedToken = function (res) {
     maxAge: 86400 * 7000,
     httpOnly: true,
   });
+
+  // vishal edits--> agar token chaiye frontend mein to
+  return {
+    accessToken,
+    // refreshToken,
+  };
 };
 
 const User = mongoose.model("User", userSchema);
