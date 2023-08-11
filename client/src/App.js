@@ -17,6 +17,7 @@ import ScifiImage from "./pages/ScifiImage";
 
 function App() {
   const theme = useMemo(() => createTheme(themeSettings()), []);
+  const loggedIn = localStorage.getItem("authToken");
 
   return (
     <>
@@ -25,9 +26,9 @@ function App() {
         <Navbar />
         <Toaster />
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          {/* <Route path="/login" element={<Login />} /> */}
+          <Route path="/" element={(loggedIn != null) ? <ChatBot /> :<Login />} />
+          <Route path="/register" element={(loggedIn != null) ? <ChatBot /> :<Register />} />
+          <Route path="/login" element={ (loggedIn != null) ? <ChatBot /> :  <Login />} />
           <Route path="/summary" element={<Summary />} />
           <Route path="/paragraph" element={<Paragraph />} />
           <Route path="/chatbot" element={<ChatBot />} />

@@ -8,6 +8,9 @@ exports.sendToken = (user, statusCode, res) => {
   res.status(statusCode).json({
     success: true,
     token,
+
+    // Vishal edits--> sending username in the json webtoken
+    username: user.username
   });
 };
 
@@ -45,7 +48,9 @@ exports.loginController = async (req, res, next) => {
       return next(new errorResponse("Invalid Creditial", 401));
     }
     //res
+    // res.json(user);
     this.sendToken(user, 200, res);
+    
   } catch (error) {
     console.log(error);
     next(error);
