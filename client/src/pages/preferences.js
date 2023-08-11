@@ -48,20 +48,23 @@ function Preferences() {
     }));
   };
 
-  // const handleStyleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   let filtered = [];
-  //   if (formData.favoriteStyles.includes(value)) {
-  //     filtered = formData.favoriteStyles.filter((style) => style != value);
-  //   } else {
-  //     filtered = formData.favoriteStyles;
-  //     filtered.push(value);
-  //   }
-  //   setFormData((prevData) => ({
-  //     ...prevData,
-  //     favoriteStyles: filtered,
-  //   }));
-  // };
+  const handleSubmit = async ()=> {
+    e.preventDefault();
+    try {
+      await axios.post("/api/v1/auth/preferences",formData);
+      navigate("/chatbot");
+    } catch (err) {
+      console.log(err);
+      if (err.response.data.error) {
+        setError(err.response.data.error);
+      } else if (err.message) {
+        setError(err.message);
+      }
+      setTimeout(() => {
+        setError("");
+      }, 5000);
+    }
+  }
 
   const availablePatterns = [
     "Stripes",
@@ -268,7 +271,7 @@ function Preferences() {
         </div>
       </Form.Group>
 
-      <Button variant="primary" type="submit">
+      <Button variant="primary" type="submit" onClick={handleSubmit}>
         Submit
       </Button>
     </Form>
