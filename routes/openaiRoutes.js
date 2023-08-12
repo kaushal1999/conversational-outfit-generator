@@ -1,19 +1,11 @@
-// const express = require("express");
-// const {
-//   summaryController,
-//   paragraphController,
-//   chatbotController,
-//   jsconverterController,
-//   scifiImageController,
-// } = require("../controllers/openiaController");
+const express = require("express");
+const {
+  chatbotController,
+} = require("../controllers/openiaController");
 
-// const router = express.Router();
+const router = express.Router();
 
-// //route
-// router.post("/summary", summaryController);
-// router.post("/paragraph", paragraphController);
-// router.post("/chatbot", chatbotController);
-// router.post("/js-converter", jsconverterController);
-// router.post("/scifi-image", scifiImageController);
+//route
+router.post("/chatbot", chatbotController);
 
-// module.exports = router;
+module.exports = router;

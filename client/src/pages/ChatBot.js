@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 import axios from "axios";
+import { useRef } from "react";
 import {
   Box,
   Typography,
@@ -13,15 +13,18 @@ import {
   Collapse,
   Card,
 } from "@mui/material";
+import { v4 as uuidv4 } from "uuid";
+
 
 const ChatBot = () => {
+  const scrollRef = useRef();
   const theme = useTheme();
   const navigate = useNavigate();
   //media
   const isNotMobile = useMediaQuery("(min-width: 1000px)");
   // states
   const [text, settext] = useState("");
-  const [response, setResponse] = useState("");
+  const [messages, setMessages] = useState([]);
   const [error, setError] = useState("");
 
   //register ctrl
@@ -30,7 +33,7 @@ const ChatBot = () => {
     try {
       const { data } = await axios.post("/api/v1/openai/chatbot", { text });
       console.log(data);
-      setResponse(data);
+      setMessages(data);
     } catch (err) {
       console.log(error);
       if (err.response.data.error) {
@@ -58,7 +61,7 @@ const ChatBot = () => {
         </Alert>
       </Collapse>
       
-      {response ? (
+      {messages ? (
         <Card
           sx={{
             mt: 4,
@@ -70,7 +73,24 @@ const ChatBot = () => {
             bgcolor: "background.default",
           }}
         >
-          <Typography p={2}>{response}</Typography>
+          {/* <Typography p={2}>{response}</Typography> */}
+          <div className="chat-messages">
+        {messages.map((message) => {
+          return (
+            <div ref={scrollRef} key={uuidv4()}>
+              <div
+                className={`message ${
+                  message.fromSelf ? "sended" : "recieved"
+                }`}
+              >
+                <div className="content ">
+                  <p>{message.message}</p>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
         </Card>
       ) : (
         <Card
@@ -134,3 +154,8 @@ const ChatBot = () => {
 };
 
 export default ChatBot;
+
+
+
+
+

@@ -10,6 +10,8 @@ const errorHandler = require("./middelwares/errorMiddleware");
 //routes path
 const authRoutes = require("./routes/authRoutes");
 const prefRoutes=require("./routes/prefRoute");
+const openaiRoutes=require("./routes/openaiRoutes");
+
 
 //dotenv
 dotenv.config();
@@ -33,7 +35,7 @@ const PORT = process.env.PORT || 8080;
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/preferences", prefRoutes);
 
-// app.use("/api/v1/openai", require("./routes/openaiRoutes"));
+app.use("/api/v1/openai", openaiRoutes);
 
 //listen server
 app.listen(PORT, () => {
