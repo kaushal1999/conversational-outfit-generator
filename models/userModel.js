@@ -1,11 +1,11 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
-const JWT = require("jsonwebtoken");
-const cookie = require("cookie");
-const { array } = require("prop-types");
+import { Schema, model } from "mongoose";
+import  bcrypt  from "bcryptjs";
+import jwt from "jsonwebtoken";
+// import cookie from "cookie";
+// import { array } from "prop-types";
 
 //models
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
   username: {
     type: String,
     required: [true, "Username is Required"],
@@ -20,9 +20,12 @@ const userSchema = new mongoose.Schema({
     required: [true, "Password is required"],
     minlength: [6, "Password length should be 6 character long"],
   },
-  messages: {
+  inputMessages: {
     type:Array
-  }
+  },
+  outputMessages: {
+    type:Array
+  },
 });
 
 //hashed password
@@ -32,7 +35,7 @@ userSchema.pre("save", async function (next) {
     next();
   }
   const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
+  this.password =  bcrypt.hash(this.password, salt);
   next();
 });
 
@@ -43,12 +46,12 @@ userSchema.methods.matchPassword = async function (password) {
 
 //SIGN TOKEN
 userSchema.methods.getSignedToken = function (res) {
-  const accessToken = JWT.sign(
+  const accessToken = jwt.sign(
     { id: this._id },
     process.env.JWT_ACCESS_SECRET,
     { expiresIn: process.env.JWT_ACCESS_EXPIREIN }
   );
-  const refreshToken = JWT.sign(
+  const refreshToken = jwt.sign(
     { id: this._id },
     process.env.JWT_REFRESH_TOKEN,
     { expiresIn: process.env.JWT_REFRESH_EXIPREIN }
@@ -59,12 +62,11 @@ userSchema.methods.getSignedToken = function (res) {
   });
 
   // vishal edits--> agar token chaiye frontend mein to
-  return {
-    accessToken,
+  return accessToken;
     // refreshToken,
-  };
+  
 };
 
-const User = mongoose.model("User", userSchema);
+const User = model("User", userSchema);
 
-module.exports = User;
+export default User;

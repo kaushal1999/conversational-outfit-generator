@@ -1,3 +1,5 @@
+
+
 class errorResponse extends Error {
   constructor(message, statusCode) {
     super(message);
@@ -5,4 +7,4 @@ class errorResponse extends Error {
   }
 }
 
-module.exports = errorResponse;
+export default errorResponse;

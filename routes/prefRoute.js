@@ -1,5 +1,5 @@
-const express = require("express");
-const {prefController} = require("../controllers/prefController");
+import  express  from "express";
+import prefController from "../controllers/prefController.js"
 
 //router object
 const router = express.Router();
@@ -7,4 +7,4 @@ const router = express.Router();
 
 router.post("/",prefController)
 
-module.exports=router
+export default router

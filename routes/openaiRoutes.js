@@ -1,11 +1,9 @@
-const express = require("express");
-const {
-  chatbotController,
-} = require("../controllers/openiaController");
+import { Router } from "express";
+import  chatbotController  from "../controllers/openaiController.js";
 
-const router = express.Router();
+const router = Router();
 
 //route
 router.post("/chatbot", chatbotController);
 
-module.exports = router;
+export default router;

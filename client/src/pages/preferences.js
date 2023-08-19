@@ -58,7 +58,8 @@ function Preferences() {
   const handleSubmit = async (e)=> {
     e.preventDefault();
     try {
-      await axios.post("/api/v1/preferences",formData);
+      const id=localStorage.getItem("authToken");
+      await axios.post("/api/v1/preferences",{formData,id});
       navigate("/chatbot");
     } catch (err) {
       console.log(err);

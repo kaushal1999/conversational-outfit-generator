@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useRef } from "react";
 import {
@@ -14,7 +14,7 @@ import {
   Card,
 } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
-
+// import jwt from 'jsonwebtoken'
 
 const ChatBot = () => {
   const scrollRef = useRef();
@@ -31,19 +31,30 @@ const ChatBot = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("/api/v1/openai/chatbot", { text });
+      // const decoded = jwt.verify(localStorage.getItem("authToken"), "ACCESSTOKEN");
+      const id = localStorage.getItem("authToken");
+      const  data  = await axios.post("/api/v1/openai/chatbot", {text,id});
       console.log(data);
-      setMessages(data);
+      let temp=[...messages]
+      temp.push({
+        message:text,
+        fromSelf:true
+      });
+      temp.push({
+        message:data.data,
+        fromSelf:false
+      });
+      setMessages(temp);
     } catch (err) {
       console.log(error);
-      if (err.response.data.error) {
-        setError(err.response.data.error);
-      } else if (err.message) {
-        setError(err.message);
-      }
-      setTimeout(() => {
-        setError("");
-      }, 5000);
+      // if (err.response.data.error) {
+      //   setError(err.response.data.error);
+      // } else if (err.message) {
+      //   setError(err.message);
+      // }
+      // setTimeout(() => {
+      //   setError("");
+      // }, 5000);
     }
   };
   return (
@@ -61,8 +72,8 @@ const ChatBot = () => {
         </Alert>
       </Collapse>
       
-      {messages ? (
-        <Card
+      
+        {/* <Card
           sx={{
             mt: 4,
             border: 1,
@@ -72,7 +83,7 @@ const ChatBot = () => {
             borderColor: "natural.medium",
             bgcolor: "background.default",
           }}
-        >
+        > */}
           {/* <Typography p={2}>{response}</Typography> */}
           <div className="chat-messages">
         {messages.map((message) => {
@@ -91,33 +102,9 @@ const ChatBot = () => {
           );
         })}
       </div>
-        </Card>
-      ) : (
-        <Card
-          sx={{
-            mt: 4,
-            border: 1,
-            boxShadow: 0,
-            height: "500px",
-            borderRadius: 5,
-            borderColor: "natural.medium",
-            bgcolor: "background.default",
-          }}
-        >
-          <Typography
-            variant="h5"
-            color="natural.main"
-            sx={{
-              textAlign: "center",
-              verticalAlign: "middel",
-              lineHeight: "450px",
-            }}
-          >
-            Bot Response
-          </Typography>
-        </Card>
-      )}
-     
+        {/* </Card> */}
+      
+    
      <form onSubmit={handleSubmit}>
         <Typography variant="h3">Ask with Chatbot</Typography>
 

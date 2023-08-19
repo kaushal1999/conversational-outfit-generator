@@ -1,45 +1,45 @@
-const errorHandler = require("../middelwares/errorMiddleware");
-const userModel = require("../models/userModel");
-const errorResponse = require("../utils/errroResponse");
+// import errorHandler from "../middelwares/errorMiddleware.js";
+import User from "../models/userModel.js";
+import errorResponse  from "../utils/errorResponse.js";
 
 // JWT TOKEN
-exports.sendToken = (user, statusCode, res) => {
+function sendToken(user, statusCode, res) {
   const token = user.getSignedToken(res);
+  // console.log("user             ",user._id);
   res.status(statusCode).json({
     success: true,
     token,
-
+    id:user._id.toHexString()
     // Vishal edits--> sending username in the json webtoken
-    username: user.username
   });
-};
+}
 
 //REGISTER
-exports.registerContoller = async (req, res, next) => {
+export async function registerContoller(req, res, next) {
   try {
     const { username, email, password } = req.body;
     //exisitng user
-    const exisitingEmail = await userModel.findOne({ email });
+    const exisitingEmail = await User.findOne({ email });
     if (exisitingEmail) {
       return next(new errorResponse("Email is already register", 500));
     }
-    const user = await userModel.create({ username, email, password });
-    this.sendToken(user, 201, res);
+    const user = await User.create({ username, email, password });
+    sendToken(user, 201, res);
   } catch (error) {
     console.log("kaushal",error);
     next(error);
   }
-};
+}
 
 //LOGIN
-exports.loginController = async (req, res, next) => {
+export async function loginController(req, res, next) {
   try {
     const { email, password } = req.body;
     //validation
     if (!email || !password) {
       return next(new errorResponse("Please provide email or password"));
     }
-    const user = await userModel.findOne({ email });
+    const user = await User.findOne({ email });
     if (!user) {
       return next(new errorResponse("Invalid Creditial", 401));
     }
@@ -49,19 +49,19 @@ exports.loginController = async (req, res, next) => {
     }
     //res
     // res.json(user);
-    this.sendToken(user, 200, res);
+    sendToken(user, 200, res);
     
   } catch (error) {
     console.log(error);
     next(error);
   }
-};
+}
 
 //LOGOUT
-exports.logoutController = async (req, res) => {
+export async function logoutController(req, res) {
   res.clearCookie("refreshToken");
   return res.status(200).json({
     success: true,
     message: "Logout Succesfully",
   });
-};
+}

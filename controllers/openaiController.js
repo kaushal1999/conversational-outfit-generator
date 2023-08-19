@@ -1,10 +1,12 @@
-const dotenv = require("dotenv");
+import dotenv from "dotenv"
 dotenv.config();
-const { Configuration, OpenAIApi } = require("openai");
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-const openai = new OpenAIApi(configuration);
+import mongoose from "mongoose";
+// import { Configuration, OpenAIApi } from "openai"
+// const configuration = new Configuration({
+//   apiKey: process.env.OPENAI_API_KEY,
+// });
+import User from "../models/userModel.js"
+// const openai = new OpenAIApi(configuration);
 import { OpenAI } from "langchain/llms/openai";
 import { ChatOpenAI } from "langchain/chat_models/openai";
 import { ConversationSummaryBufferMemory } from "langchain/memory";
@@ -17,31 +19,63 @@ import {
 } from "langchain/prompts";
 
 
+const chatPrompt = ChatPromptTemplate.fromPromptMessages([
+    SystemMessagePromptTemplate.fromTemplate(
+      "The following is a friendly conversation between a human and an AI. The AI is talkative and provides lots of specific details from its context. If the AI does not know the answer to a question, it truthfully says it does not know."
+    ),
+    new MessagesPlaceholder("history"),
+    HumanMessagePromptTemplate.fromTemplate("{input}"),
+  ]);
+  
+  const model = new ChatOpenAI({ temperature: 0.9, verbose: true });
 
 
 
 
-exports.chatbotController = async (req, res) => {
+
+const chatbotController = async (req, res) => {
   try {
-    const { text } = req.body;
-    const memory = new ConversationSummaryBufferMemory({
-        llm: new OpenAI({ modelName: "text-davinci-003", temperature: 0 }),
-        maxTokenLimit: 10,
+
+    const { text, id } = req.body;
+    // console.log("user id ==========",id);
+      
+
+      let _id = mongoose.Types.ObjectId(id);
+      // console.log("user id ==========",_id);
+  
+
+     const inputMessages= await User.findById(_id).select("inputMessages");
+     const outputMessages= await User.findById(_id).select("outputMessages");
+       
+    const chatPromptMemory = new ConversationSummaryBufferMemory({
+      llm: new ChatOpenAI({ modelName: "gpt-3.5-turbo", temperature: 0 }),
+      maxTokenLimit: 10,
+      returnMessages: true,
+    });
+
+    for (let index = 0; index < array.length; index++) {
+      const element1 = array[index];
+      const element2 = array[index];
+      
+    }
+
+     await chatPromptMemory.saveContext(inputMessages,outpu);
+    
+     
+      const chain = new ConversationChain({
+        llm: model,
+        memory: chatPromptMemory,
+        prompt: chatPrompt,
       });
-    // const { data } = await openai.createCompletion({
-    //   model: "text-davinci-003",
-    //   prompt: `Answer question similar to how yoda from star war would.
-    //   Me: 'what is your name?'
-    //   yoda: 'yoda is my name'
-    //   Me: ${text}`,
-    //   max_tokens: 300,
-    //   temperature: 0.7,
-    // });
-    if (data) {
-      if (data.choices[0].text) {
-        return res.status(200).json(data.choices[0].text);
-      }
-      message
+    // const data="response";
+   
+    const res1 = await chain.predict({ input: text });
+// here res1 gives the output based on the previous chats and the current message that is text
+    if (res1) {
+      console.log("data==================",data);
+      // save the text in i/p messages
+      // res1 save it in o/ message of that user
+      return res.status(200).send(data);
     }
   } catch (err) {
     console.log(err);
@@ -52,5 +86,5 @@ exports.chatbotController = async (req, res) => {
 };
 
 
-
+export default chatbotController
     

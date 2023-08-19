@@ -28,8 +28,9 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/api/v1/auth/register", { username, email, password });
-      toast.success("User Register Successfully");
+      const res=await axios.post("/api/v1/auth/register", { username, email, password });
+      toast.success("Successfull");
+      localStorage.setItem("authToken", res.data.id);
       navigate("/preferences");
     } catch (err) {
       console.log(error);
