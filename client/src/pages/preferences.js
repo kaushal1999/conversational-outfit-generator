@@ -172,7 +172,7 @@ function Preferences() {
           <option>select</option>
           <option value="slim">Slim</option>
           <option value="fit">Fit</option>
-          <option value="wide"></option>
+          <option value="wide">Wide</option>
           {/* <option value="3">Three</option> */}
         </Form.Select>
       </Form.Group>
