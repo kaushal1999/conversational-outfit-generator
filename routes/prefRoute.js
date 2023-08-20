@@ -1,7 +1,7 @@
 import  express  from "express";
 import prefController from "../controllers/prefController.js"
 
-//router object
+
 const router = express.Router();
 
 

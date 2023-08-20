@@ -16,15 +16,15 @@ import {
 const Register = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  //media
+  
   const isNotMobile = useMediaQuery("(min-width: 1000px)");
-  // states
+  
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  //register ctrl
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

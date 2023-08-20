@@ -59,14 +59,14 @@ function Preferences() {
       navigate("/chatbot");
     } catch (err) {
       console.log(err);
-      // if (err.response.data.error) {
-      //   setError(err.response.data.error);
-      // } else if (err.message) {
-      //   setError(err.message);
-      // }
-      // setTimeout(() => {
-      //   setError("");
-      // }, 5000);
+      
+      
+      
+      
+      
+      
+      
+      
     }
   }
 

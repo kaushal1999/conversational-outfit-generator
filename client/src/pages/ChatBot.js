@@ -61,15 +61,9 @@ const ChatBot = () => {
       });
       setMessages(temp);
     } catch (err) {
-      console.log(error);
-      
-      
-      
-      
-      
-      
-      
-      
+
+      setloader(false)
+      setError(err.message)
     }
   };
   return (
