@@ -26,7 +26,6 @@ function Preferences() {
     culturalInfluences: "",
     budgetRange: "",
     patternsPrints: "",
-    accessories: "",
     festiveStyle: "",
     inspiration: "",
     additionalInfo: "",
@@ -58,6 +57,7 @@ function Preferences() {
   const handleSubmit = async (e)=> {
     e.preventDefault();
     try {
+      console.log(JSON.stringify({formData}), formData);
       const id=localStorage.getItem("authToken");
       await axios.post("/api/v1/preferences",{formData,id});
       navigate("/chatbot");

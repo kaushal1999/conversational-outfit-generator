@@ -14,6 +14,7 @@ import Preferences from "./pages/preferences";
 function App() {
   const theme = useMemo(() => createTheme(themeSettings()), []);
   const loggedIn = localStorage.getItem("authToken");
+  const isUserPref = localStorage.getItem("isUserPref");
 
   return (
     <>
@@ -22,8 +23,8 @@ function App() {
         <Toaster />
         <Routes>
           <Route path="/" element={(loggedIn != null) ? <ChatBot /> :<Login />} />
-          <Route path="/register" element={(loggedIn != null) ? <ChatBot /> :<Register />} />
-          <Route path="/login" element={ (loggedIn != null) ? <ChatBot /> :  <Login />} />
+          <Route path="/register" element={(loggedIn != null) ? <Preferences /> :<Register />} />
+          <Route path="/login" element={ (loggedIn != null && isUserPref != false) ? <ChatBot /> : ((loggedIn != null && isUserPref == false) ? <Preferences /> : <Login />)} />
           <Route path="/chatbot" element={<ChatBot />} />
           <Route path="/preferences" element={<Preferences />} />
 

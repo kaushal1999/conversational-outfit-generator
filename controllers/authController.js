@@ -1,15 +1,16 @@
 // import errorHandler from "../middelwares/errorMiddleware.js";
 import User from "../models/userModel.js";
-import errorResponse  from "../utils/errorResponse.js";
+import errorResponse from "../utils/errorResponse.js";
 
 // JWT TOKEN
-function sendToken(user, statusCode, res) {
+function sendToken(user, statusCode, res, isUserPref) {
   const token = user.getSignedToken(res);
   // console.log("user             ",user._id);
   res.status(statusCode).json({
     success: true,
+    isUserPref: isUserPref,
     token,
-    id:user._id.toHexString()
+    id: user._id.toHexString()
     // Vishal edits--> sending username in the json webtoken
   });
 }
@@ -26,7 +27,7 @@ export async function registerContoller(req, res, next) {
     const user = await User.create({ username, email, password });
     sendToken(user, 201, res);
   } catch (error) {
-    console.log("kaushal",error);
+    console.log("kaushal", error);
     next(error);
   }
 }
@@ -49,8 +50,15 @@ export async function loginController(req, res, next) {
     }
     //res
     // res.json(user);
-    sendToken(user, 200, res);
-    
+    // checking if the userPref is empty or not
+    const userPref = user.userPref;
+    if (userPref.length == 0) {
+      sendToken(user, 200, res, false);
+    }
+    else{
+      sendToken(user, 200, res, true);
+    }
+
   } catch (error) {
     console.log(error);
     next(error);
