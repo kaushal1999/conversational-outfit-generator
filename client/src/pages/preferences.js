@@ -43,7 +43,7 @@ function Preferences() {
     const { name, value } = e.target;
     let filtered = [];
     if (formData[name].includes(value)) {
-      filtered = formData[name].filter((e) => e != value);
+      filtered = formData[name].filter((e) => e !== value);
     } else {
       filtered = formData[name];
       filtered.push(value);
