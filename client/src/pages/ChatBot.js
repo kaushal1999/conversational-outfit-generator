@@ -92,7 +92,7 @@ const ChatBot = () => {
 
 
         {/* <Typography p={2}>{response}</Typography> */}
-        <div className="chat-messages">
+        <div className="chat-messages" style={{ width: "100%"}}>
           {messages.map((message) => {
             return (
               <div ref={scrollRef} key={uuidv4()}>
@@ -100,8 +100,8 @@ const ChatBot = () => {
                   className={`message ${message.fromSelf ? "sended" : "recieved"
                     }`}
                 >
-                  <div className="content " style={{backgroundColor: "black"}}>
-                    <p style={{color: "white"}}>{message.message}</p>
+                  <div className="content " style={{backgroundColor: "#0071dc"}}>
+                    <p style={{color: "#edf5fd"}}>{message.message}</p>
                   </div>
                 </div>
               </div>
