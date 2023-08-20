@@ -53,7 +53,7 @@ const chatbotController = async (req, res) => {
 
     const chatPromptMemory = new ConversationSummaryBufferMemory({
       llm: new ChatOpenAI({ modelName: "gpt-3.5-turbo", temperature: 0 }),
-      maxTokenLimit: 500,
+      maxTokenLimit: 250,
       returnMessages: true,
     });
 

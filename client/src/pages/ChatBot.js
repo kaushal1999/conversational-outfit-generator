@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import {  useNavigate } from "react-router-dom";
+import Placeholder from 'react-bootstrap/Placeholder';
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useRef } from "react";
 import {
@@ -26,6 +27,8 @@ const ChatBot = () => {
   const [text, settext] = useState("");
   const [messages, setMessages] = useState([]);
   const [error, setError] = useState("");
+  const [loader, setloader] = useState(false);
+
 
   //register ctrl
   const handleLogout = () => {
@@ -38,19 +41,23 @@ const ChatBot = () => {
     e.preventDefault();
     try {
       // const decoded = jwt.verify(localStorage.getItem("authToken"), "ACCESSTOKEN");
+      settext("");
+      setloader(true)
       const id = localStorage.getItem("authToken");
       console.log("line 36");
-      const  data  = await axios.post("/api/v1/openai/chatbot", {text,id});
+
+      const data = await axios.post("/api/v1/openai/chatbot", { text, id });
+      setloader(false)
       console.log(data);
       console.log("hits");
-      let temp=[...messages]
+      let temp = [...messages]
       temp.push({
-        message:text,
-        fromSelf:true
+        message: text,
+        fromSelf: true
       });
       temp.push({
-        message:data.data,
-        fromSelf:false
+        message: data.data,
+        fromSelf: false
       });
       setMessages(temp);
     } catch (err) {
@@ -66,70 +73,80 @@ const ChatBot = () => {
     }
   };
   return (
-    <Box
-      // style = {{width : "500px"}}
-      width={"80vw"}
-      p={"2rem"}
-      m={"2rem auto"}
-      borderRadius={5}
-      sx={{ boxShadow: 5 }}
-      backgroundColor={theme.palette.background.alt}
-    >
-      <Collapse in={error}>
-        <Alert severity="error" sx={{ mb: 2 }}>
-          {error}
-        </Alert>
-      </Collapse>
-      
-      
-       
-          {/* <Typography p={2}>{response}</Typography> */}
-          <div className="chat-messages">
-        {messages.map((message) => {
-          return (
-            <div ref={scrollRef} key={uuidv4()}>
-              <div
-                className={`message ${
-                  message.fromSelf ? "sended" : "recieved"
-                }`}
-              >
-                <div className="content ">
-                  <p>{message.message}</p>
+    <>
+      <Box
+        // style = {{width : "500px"}}
+        width={"80vw"}
+        p={"2rem"}
+        m={"2rem auto"}
+        borderRadius={5}
+        sx={{ boxShadow: 5 }}
+        backgroundColor={theme.palette.background.alt}
+      >
+        <Collapse in={error}>
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        </Collapse>
+
+
+
+        {/* <Typography p={2}>{response}</Typography> */}
+        <div className="chat-messages">
+          {messages.map((message) => {
+            return (
+              <div ref={scrollRef} key={uuidv4()}>
+                <div
+                  className={`message ${message.fromSelf ? "sended" : "recieved"
+                    }`}
+                >
+                  <div className="content " style={{backgroundColor: "black"}}>
+                    <p style={{color: "white"}}>{message.message}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
         {/* </Card> */}
-      
-    
-     <form onSubmit={handleSubmit}>
-        <Typography variant="h3">Ask with Chatbot</Typography>
 
-        <TextField
-          placeholder="add your text"
-          type="text"
-          multiline={true}
-          required
-          margin="normal"
-          fullWidth
-          value={text}
-          onChange={(e) => {
-            settext(e.target.value);
-          }}
-        />
+        {loader &&
+          <Placeholder as="p" animation="wave">
+            <Placeholder xs={12} />
+          </Placeholder>
+        }
+        {loader && <Placeholder as="p" animation="wave">
+          <Placeholder xs={12} />
+        </Placeholder>
+        }
 
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          size="large"
-          sx={{ color: "white", mt: 2 }}
-        >
-          Chat
-        </Button>
-        <Button
+
+        <form onSubmit={handleSubmit}>
+          <Typography variant="h3">Ask with Chatbot</Typography>
+
+          <TextField
+            placeholder="add your text"
+            type="text"
+            multiline={true}
+            required
+            margin="normal"
+            fullWidth
+            value={text}
+            onChange={(e) => {
+              settext(e.target.value);
+            }}
+          />
+
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            size="large"
+            sx={{ color: "white", mt: 2 }}
+          >
+            Chat
+          </Button>
+          <Button
            onClick={handleLogout}
           variant="contained"
           size="large"
@@ -140,10 +157,11 @@ const ChatBot = () => {
         {/* <Typography mt={2}>
           not this tool ? <Link to="/">GO BACK</Link>
         </Typography> */}
-      </form>
+        </form>
 
 
-    </Box>
+      </Box>
+    </>
   );
 };
 
