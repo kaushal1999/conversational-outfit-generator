@@ -3,6 +3,8 @@ import Placeholder from 'react-bootstrap/Placeholder';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useRef } from "react";
+import OpenAI from 'openai';
+
 import {
   Box,
   Typography,
@@ -28,8 +30,16 @@ const ChatBot = () => {
   const [messages, setMessages] = useState([]);
   const [error, setError] = useState("");
   const [loader, setloader] = useState(false);
-
-
+  
+  const handleGeneration=async ()=> {
+    const response = await OpenAI.createImage({
+      prompt: messages[messages.length-1].message,
+      n: 1,
+      size: "256x256",
+    });
+    const image_url = response.data.data[0].url;
+    console.log(image_url);
+  }
   
   const handleLogout = () => {
     
@@ -140,6 +150,7 @@ const ChatBot = () => {
           >
             Chat
           </Button>
+          <div style={{display:"flex"}}>
           <Button
            onClick={handleLogout}
           variant="contained"
@@ -148,6 +159,18 @@ const ChatBot = () => {
         >
           Logout
         </Button>
+        <Button
+           onClick={handleGeneration}
+          style={{marginLeft:"10px"}}
+          //  onClick={}
+          variant="contained"
+          size="large"
+          sx={{ color: "white", mt: 2 }}
+        >
+          Generate Images
+        </Button>
+          </div>
+         
         {/* <Typography mt={2}>
           not this tool ? <Link to="/">GO BACK</Link>
         </Typography> */}
