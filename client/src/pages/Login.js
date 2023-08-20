@@ -28,10 +28,12 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await axios.post("/api/v1/auth/login", { email, password });
-      // console.log(res.data.token);
+      console.log(res.data.isUserPref);
       toast.success("Login Successfully");
       localStorage.setItem("authToken", res.data.id);
-      navigate("/chatbot");
+      localStorage.setItem("isUserPref", res.data.isUserPref);
+      if(res.data.isUserPref) navigate("/chatbot");
+      else navigate("/preferences")
     } catch (err) {
       console.log(error);
       if (err.response.data.error) {

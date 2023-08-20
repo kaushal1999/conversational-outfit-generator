@@ -33,8 +33,10 @@ const ChatBot = () => {
     try {
       // const decoded = jwt.verify(localStorage.getItem("authToken"), "ACCESSTOKEN");
       const id = localStorage.getItem("authToken");
+      console.log("line 36");
       const  data  = await axios.post("/api/v1/openai/chatbot", {text,id});
       console.log(data);
+      console.log("hits");
       let temp=[...messages]
       temp.push({
         message:text,
@@ -59,7 +61,8 @@ const ChatBot = () => {
   };
   return (
     <Box
-      width={isNotMobile ? "40%" : "80%"}
+      // style = {{width : "500px"}}
+      width={"80vw"}
       p={"2rem"}
       m={"2rem auto"}
       borderRadius={5}
@@ -73,17 +76,7 @@ const ChatBot = () => {
       </Collapse>
       
       
-        {/* <Card
-          sx={{
-            mt: 4,
-            border: 1,
-            boxShadow: 0,
-            height: "500px",
-            borderRadius: 5,
-            borderColor: "natural.medium",
-            bgcolor: "background.default",
-          }}
-        > */}
+       
           {/* <Typography p={2}>{response}</Typography> */}
           <div className="chat-messages">
         {messages.map((message) => {

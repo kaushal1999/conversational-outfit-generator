@@ -26,6 +26,9 @@ const userSchema = new Schema({
   outputMessages: {
     type:Array
   },
+  userPref: {
+    type: Array
+  }
 });
 
 //hashed password

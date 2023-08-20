@@ -33,7 +33,7 @@ const PORT = process.env.PORT || 8080;
 //API routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/preferences", prefRoutes);
-app.use("/api/v1/openai", openaiRoutes);
+app.use("/api/v1/openai", openaiRoutes); 
 
 //listen server
 app.listen(PORT, async () => {
