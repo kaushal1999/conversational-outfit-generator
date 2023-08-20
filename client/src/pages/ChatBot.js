@@ -28,6 +28,12 @@ const ChatBot = () => {
   const [error, setError] = useState("");
 
   //register ctrl
+  const handleLogout = () => {
+    
+      localStorage.clear()
+      navigate("/")
+    
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -122,6 +128,14 @@ const ChatBot = () => {
           sx={{ color: "white", mt: 2 }}
         >
           Chat
+        </Button>
+        <Button
+           onClick={handleLogout}
+          variant="contained"
+          size="large"
+          sx={{ color: "white", mt: 2 }}
+        >
+          Logout
         </Button>
         {/* <Typography mt={2}>
           not this tool ? <Link to="/">GO BACK</Link>

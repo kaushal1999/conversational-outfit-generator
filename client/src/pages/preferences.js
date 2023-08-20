@@ -23,12 +23,7 @@ function Preferences() {
     accessories: [],
     patterns: [],
     bodyType: "",
-    culturalInfluences: "",
-    budgetRange: "",
     patternsPrints: "",
-    festiveStyle: "",
-    inspiration: "",
-    additionalInfo: "",
   });
 
   const handleInputChange = (e) => {
@@ -57,7 +52,8 @@ function Preferences() {
   const handleSubmit = async (e)=> {
     e.preventDefault();
     try {
-      console.log(JSON.stringify({formData}), formData);
+
+      console.log( formData);
       const id=localStorage.getItem("authToken");
       await axios.post("/api/v1/preferences",{formData,id});
       navigate("/chatbot");
@@ -170,13 +166,13 @@ function Preferences() {
         <Form.Label>Body Type</Form.Label>
         <Form.Select
           aria-label="Default select example"
-          name="areaType"
+          name="bodyType"
           onChange={handleInputChange}
         >
           <option>select</option>
           <option value="slim">Slim</option>
           <option value="fit">Fit</option>
-          <option value="3"></option>
+          <option value="wide"></option>
           {/* <option value="3">Three</option> */}
         </Form.Select>
       </Form.Group>

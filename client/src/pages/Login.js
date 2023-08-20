@@ -28,7 +28,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await axios.post("/api/v1/auth/login", { email, password });
-      console.log(res.data.isUserPref);
+      // console.log(res.data.isUserPref);
       toast.success("Login Successfully");
       localStorage.setItem("authToken", res.data.id);
       localStorage.setItem("isUserPref", res.data.isUserPref);

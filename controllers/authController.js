@@ -25,6 +25,18 @@ export async function registerContoller(req, res, next) {
       return next(new errorResponse("Email is already register", 500));
     }
     const user = await User.create({ username, email, password });
+    // const collection = db.collection("articles");
+    // const pipeline = [
+    //   { $sample: { size: 5 } }
+    // ];
+    // collection.aggregate(pipeline).toArray(async function(err, result) {
+    //   if (err) {
+    //     next(err)
+    //   }
+    //  user.favourites=result
+    //  await user.save()
+    // })
+
     sendToken(user, 201, res);
   } catch (error) {
     console.log("kaushal", error);
@@ -65,9 +77,9 @@ export async function loginController(req, res, next) {
   }
 }
 
-//LOGOUT
+// LOGOUT
 export async function logoutController(req, res) {
-  res.clearCookie("refreshToken");
+  // res.clearCookie("refreshToken");
   return res.status(200).json({
     success: true,
     message: "Logout Succesfully",

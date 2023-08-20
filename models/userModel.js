@@ -28,6 +28,9 @@ const userSchema = new Schema({
   },
   userPref: {
     type: Array
+  },
+  favourites:{
+    type:Array
   }
 });
 
@@ -55,15 +58,15 @@ userSchema.methods.getSignedToken = function (res) {
     process.env.JWT_ACCESS_SECRET,
     { expiresIn: process.env.JWT_ACCESS_EXPIREIN }
   );
-  const refreshToken = jwt.sign(
-    { id: this._id },
-    process.env.JWT_REFRESH_TOKEN,
-    { expiresIn: process.env.JWT_REFRESH_EXIPREIN }
-  );
-  res.cookie("refreshToken", `${refreshToken}`, {
-    maxAge: 86400 * 7000,
-    httpOnly: true,
-  });
+  // const refreshToken = jwt.sign(
+  //   { id: this._id },
+  //   process.env.JWT_REFRESH_TOKEN,
+  //   { expiresIn: process.env.JWT_REFRESH_EXIPREIN }
+  // );
+  // res.cookie("refreshToken", `${refreshToken}`, {
+  //   maxAge: 86400 * 7000,
+  //   httpOnly: true,
+  // });
 
   // vishal edits--> agar token chaiye frontend mein to
   return accessToken;
