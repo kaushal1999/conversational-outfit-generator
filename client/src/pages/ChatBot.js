@@ -15,22 +15,22 @@ import {
   Card,
 } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
-// import jwt from 'jsonwebtoken'
+
 
 const ChatBot = () => {
   const scrollRef = useRef();
   const theme = useTheme();
   const navigate = useNavigate();
-  //media
+  
   const isNotMobile = useMediaQuery("(min-width: 1000px)");
-  // states
+  
   const [text, settext] = useState("");
   const [messages, setMessages] = useState([]);
   const [error, setError] = useState("");
   const [loader, setloader] = useState(false);
 
 
-  //register ctrl
+  
   const handleLogout = () => {
     
       localStorage.clear()
@@ -40,7 +40,7 @@ const ChatBot = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // const decoded = jwt.verify(localStorage.getItem("authToken"), "ACCESSTOKEN");
+      
       settext("");
       setloader(true)
       const id = localStorage.getItem("authToken");
@@ -61,21 +61,15 @@ const ChatBot = () => {
       });
       setMessages(temp);
     } catch (err) {
-      console.log(error);
-      // if (err.response.data.error) {
-      //   setError(err.response.data.error);
-      // } else if (err.message) {
-      //   setError(err.message);
-      // }
-      // setTimeout(() => {
-      //   setError("");
-      // }, 5000);
+
+      setloader(false)
+      setError(err.message)
     }
   };
   return (
     <>
       <Box
-        // style = {{width : "500px"}}
+        
         width={"80vw"}
         p={"2rem"}
         m={"2rem auto"}
