@@ -1,7 +1,7 @@
 
-### Personalized Outfit generation using Large Language Model & Langchain.
+### Personalized Outfit generation using Large Language Model & Langchain:
 
-Input: User details (age, gender, region, purchase history)
+Input: User details (age, gender, region, purchase history, etc)
  <br> Output: Outfit recommendations
 <br>
 Model: Existing Gen AI model
@@ -24,16 +24,16 @@ The Gen AI model generates the final outfit recommendations.
 # Installation Steps:
 1. Either clone the repo or download it as a zip. If using zip, extract it in a folder and open the extracted files in a code editor like vsCode.
 
-<!-- server-side -->
+## server-side
 2. install the required packages using npm install
 3. In the .env file, add the openAi api key. Instructions and key for the same are given are the .env file itself.
 4. Run the server using the command npm start
 
-<!-- client side -->
+## client side
 5. install the required packages using npm install
 6. Run npm start
 
-<!-- Testing the App-->
+# Using the App
 1) Create a new user account
 2) Ask any questions to outfit generator
 
