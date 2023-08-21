@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "chat gpt clone",
   "main": "server.js",
-  
+  "engines": {
+    "node": "18.17.0"
+  },
   "scripts": {
     "build": "babel client -d dist",
     "test": "echo \"Error: no test specified\" && exit 1",
