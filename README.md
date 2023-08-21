@@ -21,19 +21,23 @@ The system sends the summarized conversations to the Gen AI model along with the
 The Gen AI model generates the final outfit recommendations.
 <br><br>
 
-# Installation Steps:
+### Requirements:
+Node.js v18.17.0
+
+## Installation Steps:
 1. Either clone the repo or download it as a zip. If using zip, extract it in a folder and open the extracted files in a code editor like vsCode.
 
-## server-side
+### server-side
 2. install the required packages using npm install
 3. In the .env file, add the openAi api key. Instructions and key for the same are given are the .env file itself.
 4. Run the server using the command npm start
 
-## client side
-5. install the required packages using npm install
-6. Run npm start
+### client side
+5. run "cd client" to change current directory to client
+6. install the required packages using npm install
+7. Run npm start
 
-# Using the App
+## Using the App
 1) Create a new user account
 2) Ask any questions to outfit generator
 
