@@ -94,8 +94,6 @@ const ChatBot = () => {
         </Collapse>
 
 
-
-        {/* <Typography p={2}>{response}</Typography> */}
         <div className="chat-messages" style={{ width: "100%"}}>
           {messages.map((message) => {
             return (
@@ -112,7 +110,6 @@ const ChatBot = () => {
             );
           })}
         </div>
-        {/* </Card> */}
 
         {loader &&
           <Placeholder as="p" animation="wave">
@@ -171,9 +168,6 @@ const ChatBot = () => {
         </Button>
           </div>
          
-        {/* <Typography mt={2}>
-          not this tool ? <Link to="/">GO BACK</Link>
-        </Typography> */}
         </form>
 
 

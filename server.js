@@ -2,7 +2,6 @@ import express, { json } from "express";
 import morgan from "morgan";
 import cors from "cors";
 import  urlencoded  from "body-parser";
-// import colors from "colors";
 import { config } from "dotenv";
 import  connectDB  from "./config/db.js";
 import errorHandler from "./middelwares/errorMiddleware.js";

@@ -11,7 +11,6 @@ function sendToken(user, statusCode, res, isUserPref) {
     isUserPref: isUserPref,
     token,
     id: user._id.toHexString()
-    // Vishal edits--> sending username in the json webtoken
   });
 }
 
@@ -25,17 +24,6 @@ export async function registerContoller(req, res, next) {
       return next(new errorResponse("Email is already register", 500));
     }
     const user = await User.create({ username, email, password });
-    // const collection = db.collection("articles");
-    // const pipeline = [
-    //   { $sample: { size: 5 } }
-    // ];
-    // collection.aggregate(pipeline).toArray(async function(err, result) {
-    //   if (err) {
-    //     next(err)
-    //   }
-    //  user.favourites=result
-    //  await user.save()
-    // })
 
     sendToken(user, 201, res);
   } catch (error) {
@@ -61,7 +49,6 @@ export async function loginController(req, res, next) {
       return next(new errorResponse("Invalid Creditial", 401));
     }
     //res
-    // res.json(user);
     // checking if the userPref is empty or not
     const userPref = user.userPref;
     if (userPref.length == 0) {

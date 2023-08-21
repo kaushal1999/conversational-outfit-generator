@@ -3,8 +3,6 @@ import  bcrypt  from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 
-
-
 const userSchema = new Schema({
   username: {
     type: String,
@@ -58,17 +56,7 @@ userSchema.methods.getSignedToken = function (res) {
     process.env.JWT_ACCESS_SECRET,
     { expiresIn: process.env.JWT_ACCESS_EXPIREIN }
   );
-  
-  
-  
-  
-  
-  
-  
-  
-  
 
-  
   return accessToken;
     
   

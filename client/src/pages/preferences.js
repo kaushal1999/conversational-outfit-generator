@@ -59,14 +59,6 @@ function Preferences() {
       navigate("/chatbot");
     } catch (err) {
       console.log(err);
-      
-      
-      
-      
-      
-      
-      
-      
     }
   }
 
@@ -173,7 +165,6 @@ function Preferences() {
           <option value="slim">Slim</option>
           <option value="fit">Fit</option>
           <option value="wide">Wide</option>
-          {/* <option value="3">Three</option> */}
         </Form.Select>
       </Form.Group>
 
@@ -187,7 +178,6 @@ function Preferences() {
           <option>select</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
-          {/* <option value="3">Three</option> */}
         </Form.Select>
       </Form.Group>
 
@@ -241,22 +231,6 @@ function Preferences() {
           ))}
         </div>
       </Form.Group>
-
-      {/* <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Your Lifestyle</Form.Label>
-        <Form.Select
-          aria-label="Default select example"
-          name="lifeStyle"
-          onChange={handleInputChange}
-        >
-          <option>select</option>
-          <option value="Corporate Professional">Corporate Professional
-</option>
-          <option value="Creative Artist"Creative Artist
-></option>
-          <option value="">Three</option>
-        </Form.Select>
-      </Form.Group> */}
 
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Favorite Patterns</Form.Label>
