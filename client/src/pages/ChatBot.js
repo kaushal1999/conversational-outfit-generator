@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import Placeholder from 'react-bootstrap/Placeholder';
+import Placeholder from "react-bootstrap/Placeholder";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useRef } from "react";
-import OpenAI from 'openai';
 
 import {
   Box,
@@ -18,68 +17,52 @@ import {
 } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 
-
 const ChatBot = () => {
   const scrollRef = useRef();
   const theme = useTheme();
   const navigate = useNavigate();
-  
+
   const isNotMobile = useMediaQuery("(min-width: 1000px)");
-  
+
   const [text, settext] = useState("");
   const [messages, setMessages] = useState([]);
   const [error, setError] = useState("");
   const [loader, setloader] = useState(false);
-  
-  const handleGeneration=async ()=> {
-    const response = await OpenAI.createImage({
-      prompt: messages[messages.length-1].message,
-      n: 1,
-      size: "256x256",
-    });
-    const image_url = response.data.data[0].url;
-    console.log(image_url);
-  }
-  
+
   const handleLogout = () => {
-    
-      localStorage.clear()
-      navigate("/")
-    
-  }
+    localStorage.clear();
+    navigate("/");
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      
       settext("");
-      setloader(true)
+      setloader(true);
       const id = localStorage.getItem("authToken");
       console.log("line 36");
 
       const data = await axios.post("/api/v1/openai/chatbot", { text, id });
-      setloader(false)
+      setloader(false);
       console.log(data);
       console.log("hits");
-      let temp = [...messages]
+      let temp = [...messages];
       temp.push({
         message: text,
-        fromSelf: true
+        fromSelf: true,
       });
       temp.push({
         message: data.data,
-        fromSelf: false
+        fromSelf: false,
       });
       setMessages(temp);
     } catch (err) {
-
-      setloader(false)
-      setError(err.message)
+      setloader(false);
+      setError(err.message);
     }
   };
   return (
     <>
       <Box
-        
         width={"80vw"}
         p={"2rem"}
         m={"2rem auto"}
@@ -93,17 +76,20 @@ const ChatBot = () => {
           </Alert>
         </Collapse>
 
-
-        <div className="chat-messages" style={{ width: "100%"}}>
+        <div className="chat-messages" style={{ width: "100%" }}>
           {messages.map((message) => {
             return (
               <div ref={scrollRef} key={uuidv4()}>
                 <div
-                  className={`message ${message.fromSelf ? "sended" : "recieved"
-                    }`}
+                  className={`message ${
+                    message.fromSelf ? "sended" : "recieved"
+                  }`}
                 >
-                  <div className="content " style={{backgroundColor: "#0071dc"}}>
-                    <p style={{color: "#edf5fd"}}>{message.message}</p>
+                  <div
+                    className="content "
+                    style={{ backgroundColor: "#0071dc" }}
+                  >
+                    <p style={{ color: "#edf5fd" }}>{message.message}</p>
                   </div>
                 </div>
               </div>
@@ -111,16 +97,16 @@ const ChatBot = () => {
           })}
         </div>
 
-        {loader &&
+        {loader && (
           <Placeholder as="p" animation="wave">
             <Placeholder xs={12} />
           </Placeholder>
-        }
-        {loader && <Placeholder as="p" animation="wave">
-          <Placeholder xs={12} />
-        </Placeholder>
-        }
-
+        )}
+        {loader && (
+          <Placeholder as="p" animation="wave">
+            <Placeholder xs={12} />
+          </Placeholder>
+        )}
 
         <form onSubmit={handleSubmit}>
           <Typography variant="h3">Ask with Chatbot</Typography>
@@ -137,48 +123,30 @@ const ChatBot = () => {
               settext(e.target.value);
             }}
           />
+          <div style={{ display: "flex" }}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              size="large"
+              sx={{ color: "white", mt: 2 }}
+            >
+              Chat
+            </Button>
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            size="large"
-            sx={{ color: "white", mt: 2 }}
-          >
-            Chat
-          </Button>
-          <div style={{display:"flex"}}>
-          <Button
-           onClick={handleLogout}
-          variant="contained"
-          size="large"
-          sx={{ color: "white", mt: 2 }}
-        >
-          Logout
-        </Button>
-        <Button
-           onClick={handleGeneration}
-          style={{marginLeft:"10px"}}
-          //  onClick={}
-          variant="contained"
-          size="large"
-          sx={{ color: "white", mt: 2 }}
-        >
-          Generate Images
-        </Button>
+            <Button
+              onClick={handleLogout}
+              variant="contained"
+              size="large"
+              sx={{ color: "white", mt: 2 }}
+            >
+              Logout
+            </Button>
           </div>
-         
         </form>
-
-
       </Box>
     </>
   );
 };
 
 export default ChatBot;
-
-
-
-
-
