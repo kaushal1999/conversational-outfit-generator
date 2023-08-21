@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "description": "chat gpt clone",
   "main": "server.js",
-
+  
   "scripts": {
     "build": "babel client -d dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon server.js",
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "client": "npm start --prefix ./client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
