@@ -29,7 +29,7 @@ Node.js v18.17.0
 
 ### server-side
 2. install the required packages using npm install
-3. In the .env file, add the openAi api key. Instructions and key for the same are given are the .env file itself.
+3. In the .env file, add the openAi api key. Instructions and key for the same are given in the .env file itself.
 4. Run the server using the command npm start
 
 ### client side
